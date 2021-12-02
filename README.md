@@ -22,7 +22,7 @@
 * 若要Inference請在colab上直接跑[Testing Part] Bone_abnormality_classification_inceptionv3_onlyusehand.ipynb
 * 若要Training且產生一樣的結果請在colab上直接跑[Training Part] Bone_abnormality_classification_inceptionv3_onlyusehand.ipynb
 * 資料集,model都會自動下載到.ipynb的工作區
-#### colab google drive 儲存點: https://drive.google.com/file/d/1GKTjMSlQSNzoi-zl_pNfmNvW7nLL_O0O/view?usp=sharing
+#### colab google drive 儲存點: https://drive.google.com/drive/folders/15b3ysgC7VJWETiH5mIPq8EDHEDC3Ykde?usp=sharing
 
 ```
 /DBME5028_midterm_upload_github
@@ -42,4 +42,10 @@
 
 ```
 
+#### Reference
+[1] 整體training架構參考 Prof. Hung-yi Lee.的課堂作業 以下為其助教的github連結: https://github.com/ga642381/ML2021-Spring/blob/main/HW03/HW03.ipynb
+
+[2] Preprocessing code，這邊把function列出來但不執行 參考論文: Uysal, F., Hardalaç, F., Peker, O., Tolunay, T., & Tokgöz, N. (2021). Classification of Shoulder X-ray Images with Deep Learning Ensemble Models. Applied Sciences, 11(6), 2723. https://github.com/fatihuysal88/shoulder-c/blob/main/preprocess/preprocess.py
+
+[3] focal loss : 這邊直接使用其他人的實現方式來自pytorch論壇 https://discuss.pytorch.org/t/is-this-a-correct-implementation-for-focal-loss-in-pytorch/43327/14 gamma=2, alpha=0.25 用論文建議的參數
 
