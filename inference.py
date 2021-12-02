@@ -53,6 +53,64 @@ def same_seeds(seed):
 
 same_seeds(0)
 
+# Preprocessing code
+
+
+def rotate_crop(img, rect):
+    # rotate img
+    angle = rect[2]
+    rows, cols = img.shape[0], img.shape[1]
+    M = cv2.getRotationMatrix2D((cols / 2, rows / 2), angle, 1)
+    img_rot = cv2.warpAffine(img, M, (cols, rows))
+
+    # rotate bounding box
+    rect0 = (rect[0], rect[1], 0.0)
+    box = cv2.boxPoints(rect)
+    pts = np.int0(cv2.transform(np.array([box]), M))[0]
+    pts[pts < 0] = 0
+
+    # crop
+    img_crop = img_rot[pts[1][1]:pts[0][1], pts[1][0]:pts[2][0]]
+    return img_crop
+
+
+def roı_clahe_pre_process(folder, new_folder):
+    for filename in os.listdir(folder):
+        img = cv2.imread(os.path.join(folder, filename),
+                         cv2.IMREAD_GRAYSCALE)  # read image from directory
+
+        lower_black = np.array([0], dtype="uint16")
+        upper_black = np.array([200], dtype="uint16")
+        black_mask = cv2.inRange(img, lower_black, upper_black)
+        img[np.where(black_mask == [0])] = [0]
+
+        thresh = cv2.threshold(
+            img, 30, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
+
+        contours, _ = cv2.findContours(thresh, 1, 1)
+        contours.sort(key=cv2.contourArea, reverse=True)
+
+        min_area_rect = cv2.minAreaRect(contours[0][:, 0, :])
+
+        cropped = rotate_crop(img, min_area_rect)
+        if(cropped.size == 0):
+            print(f'cropped size 0 {filename}')
+            continue
+
+        # determine clahe values
+        clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
+
+        cropped_clahe = clahe.apply(cropped)  # apply clahe transform on image
+
+        # determine new path for save to image
+        new_path = os.path.join(new_folder, filename)
+
+        cv2.imwrite(new_path, cropped_clahe)  # save output to new paths
+
+
+if(not os.path.isdir('./preprocessed')):
+    os.mkdir('./preprocessed')
+roı_clahe_pre_process('./test', './preprocessed')
 
 test_tfm = transforms.Compose([
     transforms.Resize((299, 299)),
