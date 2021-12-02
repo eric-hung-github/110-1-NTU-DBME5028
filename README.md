@@ -1,6 +1,9 @@
 # 110-1-NTU-DBME5028
 
-因為兩個人的file不太好合併，因此只拿其中一個人(eric-hung-github Yu Chen)的做成助教的格式，另一個人(Y)以colab形式儲存。
+* Team_Name : GPU_NOT_FOUND
+* Our PPT :  https://docs.google.com/presentation/d/1MYDWcNSxERyUB5gVRE8QDcF57agInevTFiUydjlZh40/edit?usp=sharing
+
+因為兩個人的file不太好合併，因此只拿其中一個人(eric-hung-github Yu Chen)的做成助教的格式，另一個人(YunHisangTang)以google colab(.ipynb)形式儲存。
 
 ```
 / 110-1-NTU-DBME5028
@@ -13,8 +16,9 @@
 
 
 
-### 假設上述資料跑不動，可以到/google_colab_file直接跑
+### 假設上述inference.py,train.py,download.sh資料跑不動，可以到/google_colab_file直接跑
 
+* 這裡僅挑inceptionv3的model來實現
 * 若要Inference請在colab上直接跑[Testing Part] Bone_abnormality_classification_inceptionv3_onlyusehand.ipynb
 * 若要Training且產生一樣的結果請在colab上直接跑[Training Part] Bone_abnormality_classification_inceptionv3_onlyusehand.ipynb
 * 資料集,model都會自動下載到.ipynb的工作區
