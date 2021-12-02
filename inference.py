@@ -15,8 +15,6 @@ from tqdm.auto import tqdm
 import os
 import pandas as pd
 import matplotlib.pyplot as plt
-import random
-import gdown
 
 
 datapath = ''
@@ -38,6 +36,8 @@ print(f'datapath {datapath} out_csv_path {out_csv_path}')
 # url = 'https://drive.google.com/uc?id=1BzedlECiMt4n0Uc_s-jjbMegzpwsEOGq'
 # output = 'model.zip'
 # gdown.download(url, output, quiet=False)
+# with zipfile.ZipFile('train.zip', 'r') as zip_ref:
+#     zip_ref.extractall('')
 
 
 def same_seeds(seed):
