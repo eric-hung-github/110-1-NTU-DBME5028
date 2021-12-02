@@ -22,6 +22,7 @@
 * 若要Inference請在colab上直接跑[Testing Part] Bone_abnormality_classification_inceptionv3_onlyusehand.ipynb
 * 若要Training且產生一樣的結果請在colab上直接跑[Training Part] Bone_abnormality_classification_inceptionv3_onlyusehand.ipynb
 * 資料集,model都會自動下載到.ipynb的工作區
+* 最後產生的結果會叫 : kaggle_incv3_01.csv
 #### colab google drive 儲存點: https://drive.google.com/drive/folders/15b3ysgC7VJWETiH5mIPq8EDHEDC3Ykde?usp=sharing
 
 ```
