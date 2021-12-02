@@ -18,7 +18,7 @@
 
 ### 假設上述inference.py,train.py,download.sh資料跑不動，可以到/google_colab_file直接跑
 
-* 這裡僅挑inceptionv3的model來實現
+* 這裡僅挑inceptionv3的model來實現(因為是我們表現最好的model，efficientNet、DenseNet161等未放入)
 * 若要Inference請在colab上直接跑[Testing Part] Bone_abnormality_classification_inceptionv3_onlyusehand.ipynb
 * 若要Training且產生一樣的結果請在colab上直接跑[Training Part] Bone_abnormality_classification_inceptionv3_onlyusehand.ipynb
 * 資料集,model都會自動下載到.ipynb的工作區
