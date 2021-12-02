@@ -35,9 +35,9 @@ except getopt.GetoptError:
     sys.exit(2)
 print(f'datapath {datapath} out_csv_path {out_csv_path}')
 
-url = 'https://drive.google.com/uc?id=1BzedlECiMt4n0Uc_s-jjbMegzpwsEOGq'
-output = 'model.zip'
-gdown.download(url, output, quiet=False)
+# url = 'https://drive.google.com/uc?id=1BzedlECiMt4n0Uc_s-jjbMegzpwsEOGq'
+# output = 'model.zip'
+# gdown.download(url, output, quiet=False)
 
 
 def same_seeds(seed):
