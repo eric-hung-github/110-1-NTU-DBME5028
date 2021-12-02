@@ -1,5 +1,6 @@
 # 110-1-NTU-DBME5028
 
+* Update: inference.py can download and run directly if gdown installed
 * Team_Name : GPU_NOT_FOUND
 * Our PPT :  https://docs.google.com/presentation/d/1MYDWcNSxERyUB5gVRE8QDcF57agInevTFiUydjlZh40/edit?usp=sharing
 
