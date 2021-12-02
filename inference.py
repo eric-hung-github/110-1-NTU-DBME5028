@@ -17,8 +17,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
-datapath = ''
-out_csv_path = ''
+datapath = './'
+out_csv_path = './'
 
 argvs = sys.argv[1:]
 try:
@@ -108,9 +108,10 @@ def roı_clahe_pre_process(folder, new_folder):
         cv2.imwrite(new_path, cropped_clahe)  # save output to new paths
 
 
-if(not os.path.isdir('./preprocessed')):
-    os.mkdir('./preprocessed')
-roı_clahe_pre_process('./test', './preprocessed')
+preprcessed_path = os.path.join(datapath, 'preprocessed')
+if(not os.path.isdir(preprcessed_path)):
+    os.mkdir(preprcessed_path)
+# roı_clahe_pre_process(os.path.join(datapath, 'test'), preprcessed_path)
 
 test_tfm = transforms.Compose([
     transforms.Resize((299, 299)),
@@ -122,7 +123,7 @@ test_tfm = transforms.Compose([
 
 # 設定root path
 # train_root_path = os.path.join(datapath, 'train')  # '/content/train/'
-test_root_path = os.path.join(datapath, 'test')  # '/content/test/'
+test_root_path = preprcessed_path  # '/content/test/'
 # y_label_path = os.path.join(datapath, 'train.csv')
 model_root_path = os.path.join(datapath, 'model')
 # pandas_y = pd.read_csv(y_label_path, index_col='id').fillna(-1)
@@ -182,15 +183,14 @@ test_unlabel_y = test_unlabel_y.assign(patient_id=patient_id_list)
 
 
 class customDataset(Dataset):
-    def __init__(self, pd_y_label, root_dir, mode, transform=None):
+    def __init__(self, pd_y_label, root_dir, transform=None):
         self.pd_y_label = pd_y_label
         self.root_dir = root_dir
-        self.mode = mode
         self.transform = transform
 
     def __getitem__(self, index):
         img_name = self.pd_y_label.index[index]
-        img_path = os.path.join(self.root_dir, self.mode, img_name)
+        img_path = os.path.join(self.root_dir, img_name)
         img = Image.open(img_path)
         y_label = self.pd_y_label.loc[img_name].tolist()[0]
         aux_x = self.pd_y_label.loc[img_name].tolist()[1:-1]
@@ -205,8 +205,7 @@ class customDataset(Dataset):
 
 batch_size = 64
 
-test_set = customDataset(test_unlabel_y, test_root_path,
-                         mode='test', transform=test_tfm)
+test_set = customDataset(test_unlabel_y, test_root_path, transform=test_tfm)
 test_loader = DataLoader(test_set, batch_size=batch_size, shuffle=False)
 
 # 建立自己的model，主要更換後面的fc layer
@@ -244,8 +243,15 @@ class Classifier(nn.Module):
 torch_pretrained_model = torchvision.models.inception_v3(
     pretrained=False, init_weights=True, aux_logits=False)
 
-device = "cuda" if torch.cuda.is_available() else "cpu"
-PATH = os.path.join(model_root_path+f"best_model_hand{12}.pt")
+# device = "cuda" if torch.cuda.is_available() else "cpu"
+device = "cpu"
+
+PATH = os.path.join(model_root_path, f"best_model_hand{12}.pt")
+
+# model = Classifier(torch_pretrained_model)
+
+# model.load_state_dict(torch.load(PATH))
+# model.to(device)
 
 model = Classifier(torch_pretrained_model).to(device)
 
@@ -263,9 +269,21 @@ for batch in tqdm(test_loader):
     with torch.no_grad():
         logits = model(imgs.to(device), aux_x.to(device))
     predictions = predictions + logits.cpu().detach().numpy().reshape(-1).tolist()
+    break
 
-with open("output.csv") as f:
-    f.write("id,label\n")
-    test_index = test_unlabel_y.index.tolist()
-    for i, pred in enumerate(predictions):
-        f.write(f"{test_index[i]},{pred}\n")
+
+test_index = test_unlabel_y.index.tolist()
+output_dict = {}
+for i in range(len(predictions)):
+    index = test_index[i].split('_')[0]+test_index[i].split('_')[1]
+    if(index in output_dict):
+        output_dict[index][0] += predictions[i]
+        output_dict[index][1] += 1
+    else:
+        output_dict[index] = [predictions[i], 1]
+
+output_list = []
+for index, value in output_dict.items():
+    output_list.append((index, value[0]/value[1]))
+pd.DataFrame(output_list, columns=['id', 'label']).to_csv(
+    path_or_buf=os.path.join(out_csv_path, 'output.csv'), index=False)
