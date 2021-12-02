@@ -40,7 +40,6 @@
     /Kaggle : 上傳Kaggle的csv檔 
     /[Testing Part] Bone_abnormality_classification_inceptionv3_onlyusehand.ipynb
     /[Training Part] Bone_abnormality_classification_inceptionv3_onlyusehand.ipynb
-
 ```
 
 #### Reference
