@@ -14,7 +14,11 @@
 
 
 ### 假設上述資料跑不動，可以到/google_colab_file直接跑
-### colab google drive 儲存點: https://drive.google.com/file/d/1GKTjMSlQSNzoi-zl_pNfmNvW7nLL_O0O/view?usp=sharing
+
+* 若要Inference請在colab上直接跑[Testing Part] Bone_abnormality_classification_inceptionv3_onlyusehand.ipynb
+* 若要Training且產生一樣的結果請在colab上直接跑[Training Part] Bone_abnormality_classification_inceptionv3_onlyusehand.ipynb
+* 資料集,model都會自動下載到.ipynb的工作區
+#### colab google drive 儲存點: https://drive.google.com/file/d/1GKTjMSlQSNzoi-zl_pNfmNvW7nLL_O0O/view?usp=sharing
 
 ```
 /DBME5028_midterm_upload_github
@@ -25,7 +29,7 @@
 ```
 
 
-### github 上的儲存點:
+#### github 上的儲存點:
 ```
 /google_colab_file 
     /Kaggle : 上傳Kaggle的csv檔 
@@ -34,7 +38,4 @@
 
 ```
 
-* 若要Inference請在colab上直接跑[Testing Part] Bone_abnormality_classification_inceptionv3_onlyusehand.ipynb
-* 若要Training且產生一樣的結果請在colab上直接跑[Training Part] Bone_abnormality_classification_inceptionv3_onlyusehand.ipynb
-* 資料集,model都會自動下載到.ipynb的工作區
 
